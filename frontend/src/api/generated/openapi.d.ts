@@ -276,7 +276,7 @@ export interface components {
             /** @description Display name of the event type. */
             name: string;
             /** @description Description of the event type. */
-            description: string;
+            description?: string;
             /**
              * Format: int32
              * @description Duration of the event in minutes.
@@ -300,7 +300,7 @@ export interface components {
             /** @description Display name of the event type. */
             name: string;
             /** @description Description of the event type. */
-            description: string;
+            description?: string;
             /**
              * Format: int32
              * @description Duration of the event in minutes.

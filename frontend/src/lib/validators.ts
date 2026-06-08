@@ -3,7 +3,7 @@ import { z } from "zod";
 export const eventTypeSchema = z.object({
   slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Only lowercase letters, numbers, and hyphens are allowed"),
   name: z.string().min(1, "Name is required"),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().max(500, "Max 500 characters").optional().or(z.literal('')),
   durationMinutes: z.number().int().positive("Duration must be a positive integer"),
 });
 

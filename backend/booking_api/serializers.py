@@ -51,7 +51,7 @@ class AvailabilityScheduleSerializer(serializers.Serializer):  # type: ignore[ty
 class EventTypeSerializer(serializers.Serializer):  # type: ignore[type-arg]
     slug = serializers.CharField(validators=[validate_slug])
     name = serializers.CharField(max_length=100)
-    description = serializers.CharField(max_length=500)
+    description = serializers.CharField(max_length=500, required=False, allow_blank=True)
     durationMinutes = serializers.IntegerField(min_value=5, max_value=480)
     createdAt = serializers.CharField(read_only=True)
     updatedAt = serializers.CharField(read_only=True)
@@ -60,7 +60,7 @@ class EventTypeSerializer(serializers.Serializer):  # type: ignore[type-arg]
 class EventTypeCreateSerializer(serializers.Serializer):  # type: ignore[type-arg]
     slug = serializers.CharField(validators=[validate_slug])
     name = serializers.CharField(max_length=100)
-    description = serializers.CharField(max_length=500)
+    description = serializers.CharField(max_length=500, required=False, allow_blank=True)
     durationMinutes = serializers.IntegerField(min_value=5, max_value=480)
 
 

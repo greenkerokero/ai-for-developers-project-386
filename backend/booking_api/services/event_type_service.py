@@ -34,7 +34,7 @@ def create_event_type(data: dict[str, Any]) -> dict[str, Any] | None:
     record = {
         "slug": slug,
         "name": data["name"],
-        "description": data["description"],
+        "description": data.get("description", ""),
         "durationMinutes": data["durationMinutes"],
         "createdAt": now,
         "updatedAt": now,

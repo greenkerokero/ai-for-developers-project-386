@@ -15,10 +15,20 @@ export default defineConfig({
       "/owner": {
         target: "http://localhost:3000",
         changeOrigin: true,
+        bypass: (req) => {
+          if (req.headers.accept?.includes("text/html")) {
+            return false;
+          }
+        },
       },
       "/public": {
         target: "http://localhost:3000",
         changeOrigin: true,
+        bypass: (req) => {
+          if (req.headers.accept?.includes("text/html")) {
+            return false;
+          }
+        },
       },
     },
   },

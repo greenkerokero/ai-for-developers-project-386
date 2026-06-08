@@ -11,7 +11,7 @@ model EventType {
 
   /** Description of the event type. */
   @maxLength(500)
-  description: string;
+  description?: string;
 
   /** Duration of the event in minutes. */
   @minValue(5)
@@ -36,7 +36,7 @@ model EventTypeCreate {
 
   /** Description of the event type. */
   @maxLength(500)
-  description: string;
+  description?: string;
 
   /** Duration of the event in minutes. */
   @minValue(5)
