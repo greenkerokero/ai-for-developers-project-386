@@ -22,7 +22,7 @@ export function EventTypeFormPage() {
       slug: "",
       name: "",
       description: "",
-      durationMinutes: 30,
+      durationMinutes: 15,
     },
   });
 

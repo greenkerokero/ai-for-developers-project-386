@@ -49,7 +49,13 @@ export function AvailabilityPage() {
     if (schedule?.rules) {
       const mappedRules = DAYS.map(day => {
         const existing = schedule.rules.find(r => r.dayOfWeek === day);
-        if (existing) return existing;
+        if (existing) {
+          return {
+            ...existing,
+            startTime: existing.startTime.substring(0, 5),
+            endTime: existing.endTime.substring(0, 5),
+          };
+        }
         return { dayOfWeek: day, isAvailable: false, startTime: "09:00", endTime: "17:00" };
       });
       reset({ rules: mappedRules });

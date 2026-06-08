@@ -13,11 +13,11 @@ export default defineConfig({
   server: {
     proxy: {
       "/owner": {
-        target: "http://localhost:4010",
+        target: "http://localhost:3000",
         changeOrigin: true,
       },
       "/public": {
-        target: "http://localhost:4010",
+        target: "http://localhost:3000",
         changeOrigin: true,
       },
     },

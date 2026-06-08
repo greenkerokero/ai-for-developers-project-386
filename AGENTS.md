@@ -38,7 +38,7 @@ Prism + concurrently · Vitest + RTL + MSW · ESLint + Prettier · sonner
 
 ### Бэкенд
 
-Python 3.10+ · **uv** (пакетный менеджер) · Django 5 · Django REST Framework · django-cors-headers ·
+Python 3.10+ · uv · Django 5 · Django REST Framework · django-cors-headers ·
 In-memory storage (dict/list) · uuid · `ruff` + `black`
 
 Сервер бэкенда: `http://localhost:3000` (зафиксировано в TypeSpec).
