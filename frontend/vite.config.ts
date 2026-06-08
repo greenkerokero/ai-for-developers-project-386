@@ -17,7 +17,7 @@ export default defineConfig({
         changeOrigin: true,
         bypass: (req) => {
           if (req.headers.accept?.includes("text/html")) {
-            return false;
+            return "/index.html";
           }
         },
       },
@@ -26,7 +26,7 @@ export default defineConfig({
         changeOrigin: true,
         bypass: (req) => {
           if (req.headers.accept?.includes("text/html")) {
-            return false;
+            return "/index.html";
           }
         },
       },
