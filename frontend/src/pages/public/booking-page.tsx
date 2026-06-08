@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format, parseISO } from "date-fns";
+import { ru } from "date-fns/locale";
 import { toast } from "sonner";
 
 type FormData = z.infer<typeof bookingCreateSchema>;
@@ -36,9 +37,9 @@ export function BookingPage() {
   if (!startTime || !eventType) return null;
 
   const onSubmit = (data: FormData) => {
-    mutate(data, {
+    mutate({ ...data, guestComment: data.guestComment || undefined }, {
       onSuccess: () => {
-        toast.success("Booking confirmed!");
+        toast.success("Бронирование успешно подтверждено!");
         navigate("/");
       },
     });
@@ -48,39 +49,40 @@ export function BookingPage() {
     <div className="max-w-2xl mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle>Confirm your booking</CardTitle>
+          <CardTitle>Подтверждение бронирования</CardTitle>
           <div className="text-muted-foreground mt-2">
             <p className="font-medium text-foreground">{eventType.name}</p>
-            <p>{format(parseISO(startTime), "EEEE, MMMM d, yyyy 'at' h:mm a")}</p>
+            <p>{format(parseISO(startTime), "EEEE, d MMMM yyyy 'в' HH:mm", { locale: ru })}</p>
           </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="guestName">Name</Label>
-              <Input id="guestName" {...register("guestName")} />
+              <Label htmlFor="guestName">Ваше Имя</Label>
+              <Input id="guestName" {...register("guestName")} placeholder="Иван Иванов" />
               {errors.guestName && <p className="text-sm text-destructive">{errors.guestName.message}</p>}
             </div>
             
             <div className="space-y-2">
               <Label htmlFor="guestEmail">Email</Label>
-              <Input id="guestEmail" type="email" {...register("guestEmail")} />
+              <Input id="guestEmail" type="email" {...register("guestEmail")} placeholder="ivan@example.com" />
               {errors.guestEmail && <p className="text-sm text-destructive">{errors.guestEmail.message}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="guestComment">Additional Notes (Optional)</Label>
+              <Label htmlFor="guestComment">Дополнительная информация (необязательно)</Label>
               <textarea 
                 id="guestComment" 
                 className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 {...register("guestComment")} 
+                placeholder="Пожалуйста, поделитесь всем, что поможет подготовиться к нашей встрече."
               />
             </div>
 
             <div className="pt-4 flex justify-end space-x-2">
-              <Button type="button" variant="outline" onClick={() => navigate(-1)}>Back</Button>
+              <Button type="button" variant="outline" onClick={() => navigate(-1)}>Назад</Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Confirming..." : "Confirm Booking"}
+                {isPending ? "Подтверждение..." : "Подтвердить"}
               </Button>
             </div>
           </form>

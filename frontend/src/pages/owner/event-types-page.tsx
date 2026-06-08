@@ -10,21 +10,21 @@ export function OwnerEventTypesPage() {
   const { mutate: deleteEventType, isPending } = useDeleteEventType();
 
   const handleDelete = (slug: string) => {
-    if (confirm("Are you sure you want to delete this event type?")) {
+    if (confirm("Вы уверены, что хотите удалить этот тип события?")) {
       deleteEventType(slug, {
-        onSuccess: () => toast.success("Event type deleted"),
+        onSuccess: () => toast.success("Тип события удален"),
       });
     }
   };
 
-  if (isLoading) return <div className="p-8 text-center">Loading...</div>;
+  if (isLoading) return <div className="p-8 text-center text-muted-foreground">Загрузка...</div>;
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Event Types</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Типы событий</h1>
         <Button asChild>
-          <Link to="/owner/event-types/new">New Event Type</Link>
+          <Link to="/owner/event-types/new">Новое событие</Link>
         </Button>
       </div>
       
@@ -33,7 +33,7 @@ export function OwnerEventTypesPage() {
           <Card key={eventType.slug} className="flex flex-col">
             <CardHeader>
               <CardTitle>{eventType.name}</CardTitle>
-              <CardDescription>{eventType.durationMinutes} mins • /{eventType.slug}</CardDescription>
+              <CardDescription>{eventType.durationMinutes} мин • /{eventType.slug}</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 flex flex-col justify-between">
               <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
@@ -41,14 +41,14 @@ export function OwnerEventTypesPage() {
               </p>
               <div className="flex space-x-2 mt-auto">
                 <Button variant="outline" className="flex-1" asChild>
-                  <Link to={`/owner/event-types/${eventType.slug}/edit`}>Edit</Link>
+                  <Link to={`/owner/event-types/${eventType.slug}/edit`}>Редактировать</Link>
                 </Button>
                 <Button 
                   variant="destructive" 
                   onClick={() => handleDelete(eventType.slug)}
                   disabled={isPending}
                 >
-                  Delete
+                  Удалить
                 </Button>
               </div>
             </CardContent>
@@ -56,7 +56,7 @@ export function OwnerEventTypesPage() {
         ))}
         {data?.items.length === 0 && (
           <div className="col-span-full p-8 text-center border border-dashed rounded-lg text-muted-foreground">
-            No event types found. Create one to get started.
+            Событий не найдено. Создайте новое, чтобы начать.
           </div>
         )}
       </div>

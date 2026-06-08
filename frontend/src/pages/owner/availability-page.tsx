@@ -14,6 +14,15 @@ import { useEffect } from "react";
 type FormData = z.infer<typeof availabilityScheduleSchema>;
 
 const DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const;
+const DAYS_RU = {
+  monday: "Понедельник",
+  tuesday: "Вторник",
+  wednesday: "Среда",
+  thursday: "Четверг",
+  friday: "Пятница",
+  saturday: "Суббота",
+  sunday: "Воскресенье",
+};
 
 export function AvailabilityPage() {
   const { data: schedule, isLoading } = useOwnerAvailability();
@@ -38,7 +47,6 @@ export function AvailabilityPage() {
 
   useEffect(() => {
     if (schedule?.rules) {
-      // Ensure all days are represented
       const mappedRules = DAYS.map(day => {
         const existing = schedule.rules.find(r => r.dayOfWeek === day);
         if (existing) return existing;
@@ -51,34 +59,34 @@ export function AvailabilityPage() {
   const onSubmit = (data: FormData) => {
     mutate(data, {
       onSuccess: () => {
-        toast.success("Availability updated");
+        toast.success("Расписание обновлено");
       },
     });
   };
 
-  if (isLoading) return <div className="p-8 text-center">Loading...</div>;
+  if (isLoading) return <div className="p-8 text-center text-muted-foreground">Загрузка...</div>;
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">Availability</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Доступность</h1>
 
       <Card>
         <CardHeader>
-          <CardTitle>Weekly Hours</CardTitle>
+          <CardTitle>Рабочие часы по неделям</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {fields.map((field, index) => (
               <div key={field.id} className="flex items-center space-x-4 p-4 border rounded-lg">
-                <div className="w-32 flex items-center space-x-2">
+                <div className="w-40 flex items-center space-x-3">
                   <input
                     type="checkbox"
                     id={`rules.${index}.isAvailable`}
                     className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
                     {...register(`rules.${index}.isAvailable`)}
                   />
-                  <Label htmlFor={`rules.${index}.isAvailable`} className="capitalize font-medium text-base">
-                    {field.dayOfWeek}
+                  <Label htmlFor={`rules.${index}.isAvailable`} className="font-medium text-base">
+                    {DAYS_RU[field.dayOfWeek as keyof typeof DAYS_RU]}
                   </Label>
                 </div>
                 
@@ -95,14 +103,13 @@ export function AvailabilityPage() {
                     className="w-32"
                   />
                 </div>
-                {/* Hidden input to keep dayOfWeek in the form data */}
                 <input type="hidden" {...register(`rules.${index}.dayOfWeek`)} value={field.dayOfWeek} />
               </div>
             ))}
 
             <div className="flex justify-end pt-4">
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Saving..." : "Save Changes"}
+                {isPending ? "Сохранение..." : "Сохранить изменения"}
               </Button>
             </div>
           </form>

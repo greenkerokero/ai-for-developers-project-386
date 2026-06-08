@@ -1,6 +1,7 @@
 import { useOwnerBookings } from "@/api/bookings.queries";
 import { useCancelBooking } from "@/api/bookings.mutations";
 import { format, parseISO } from "date-fns";
+import { ru } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -10,40 +11,40 @@ export function DashboardPage() {
   const { mutate: cancelBooking, isPending } = useCancelBooking();
 
   const handleCancel = (id: string) => {
-    if (confirm("Are you sure you want to cancel this booking?")) {
+    if (confirm("Вы уверены, что хотите отменить это бронирование?")) {
       cancelBooking(id, {
-        onSuccess: () => toast.success("Booking cancelled successfully"),
+        onSuccess: () => toast.success("Бронирование успешно отменено"),
       });
     }
   };
 
-  if (isLoading) return <div className="p-8 text-center">Loading bookings...</div>;
+  if (isLoading) return <div className="p-8 text-center text-muted-foreground">Загрузка бронирований...</div>;
 
   const upcomingBookings = data?.items.filter(b => b.status === "confirmed") || [];
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Дашборд</h1>
       
       <Card>
         <CardHeader>
-          <CardTitle>Upcoming Bookings</CardTitle>
+          <CardTitle>Предстоящие встречи</CardTitle>
         </CardHeader>
         <CardContent>
           {upcomingBookings.length === 0 ? (
-            <p className="text-muted-foreground text-center py-8">No upcoming bookings.</p>
+            <p className="text-muted-foreground text-center py-8">У вас нет предстоящих встреч.</p>
           ) : (
             <div className="space-y-4">
               {upcomingBookings.map(booking => (
                 <div key={booking.id} className="flex justify-between items-center p-4 border rounded-lg">
                   <div>
-                    <h3 className="font-semibold">{booking.eventTypeName} with {booking.guestName}</h3>
+                    <h3 className="font-semibold">{booking.eventTypeName} с {booking.guestName}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {format(parseISO(booking.startTime), "EEEE, MMMM d, yyyy 'at' h:mm a")}
+                      {format(parseISO(booking.startTime), "EEEE, d MMMM yyyy 'в' HH:mm", { locale: ru })}
                     </p>
                     <p className="text-sm text-muted-foreground">{booking.guestEmail}</p>
                     {booking.guestComment && (
-                      <p className="text-sm mt-2 p-2 bg-muted rounded-md">"{booking.guestComment}"</p>
+                      <p className="text-sm mt-2 p-2 bg-muted rounded-md italic">"{booking.guestComment}"</p>
                     )}
                   </div>
                   <Button 
@@ -52,7 +53,7 @@ export function DashboardPage() {
                     disabled={isPending}
                     onClick={() => handleCancel(booking.id)}
                   >
-                    Cancel
+                    Отменить
                   </Button>
                 </div>
               ))}

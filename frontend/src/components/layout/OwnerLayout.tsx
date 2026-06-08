@@ -5,9 +5,9 @@ export function OwnerLayout() {
   const location = useLocation();
 
   const links = [
-    { to: "/owner", label: "Dashboard" },
-    { to: "/owner/event-types", label: "Event Types" },
-    { to: "/owner/availability", label: "Availability" },
+    { to: "/owner", label: "Дашборд" },
+    { to: "/owner/event-types", label: "Типы событий" },
+    { to: "/owner/availability", label: "Доступность" },
   ];
 
   return (
@@ -15,7 +15,7 @@ export function OwnerLayout() {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center">
           <Link to="/" className="mr-6 flex items-center space-x-2">
-            <span className="font-bold sm:inline-block">BookingApp Admin</span>
+            <span className="font-bold sm:inline-block">Встречи: Админка</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {links.map((link) => (
@@ -24,7 +24,7 @@ export function OwnerLayout() {
                 to={link.to}
                 className={cn(
                   "transition-colors hover:text-foreground/80",
-                  location.pathname === link.to || location.pathname.startsWith(link.to + "/")
+                  location.pathname === link.to || (link.to !== "/owner" && location.pathname.startsWith(link.to))
                     ? "text-foreground"
                     : "text-foreground/60"
                 )}

@@ -37,7 +37,6 @@ export function EventTypeEditPage() {
   }, [eventType, reset]);
 
   const onSubmit = (data: FormData) => {
-    // Only slug is read-only in OpenAPI definition for update, but we keep it in form for visual
     const updateData = {
       name: data.name,
       description: data.description,
@@ -46,32 +45,32 @@ export function EventTypeEditPage() {
     
     mutate({ slug: slug!, body: updateData }, {
       onSuccess: () => {
-        toast.success("Event type updated");
+        toast.success("Событие обновлено");
         navigate("/owner/event-types");
       },
     });
   };
 
-  if (isLoading) return <div className="p-8 text-center">Loading...</div>;
-  if (!eventType) return <div className="p-8 text-center">Event type not found</div>;
+  if (isLoading) return <div className="p-8 text-center text-muted-foreground">Загрузка...</div>;
+  if (!eventType) return <div className="p-8 text-center text-destructive">Событие не найдено</div>;
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Edit Event Type</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Редактировать событие</h1>
       </div>
 
       <Card>
         <CardContent className="pt-6">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Event Name</Label>
+              <Label htmlFor="name">Название</Label>
               <Input id="name" {...register("name")} />
               {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
             </div>
 
             <div className="space-y-2 opacity-50">
-              <Label htmlFor="slug">URL Slug (Cannot be changed)</Label>
+              <Label htmlFor="slug">URL ссылка (нельзя изменить)</Label>
               <div className="flex items-center space-x-2">
                 <span className="text-muted-foreground">/</span>
                 <Input id="slug" {...register("slug")} disabled />
@@ -79,13 +78,13 @@ export function EventTypeEditPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="durationMinutes">Duration (minutes)</Label>
+              <Label htmlFor="durationMinutes">Длительность (в минутах)</Label>
               <Input id="durationMinutes" type="number" {...register("durationMinutes", { valueAsNumber: true })} />
               {errors.durationMinutes && <p className="text-sm text-destructive">{errors.durationMinutes.message}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Описание</Label>
               <textarea 
                 id="description" 
                 className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -96,10 +95,10 @@ export function EventTypeEditPage() {
 
             <div className="flex justify-end space-x-2 pt-4">
               <Button type="button" variant="outline" onClick={() => navigate("/owner/event-types")}>
-                Cancel
+                Отмена
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Saving..." : "Save Changes"}
+                {isPending ? "Сохранение..." : "Сохранить изменения"}
               </Button>
             </div>
           </form>
