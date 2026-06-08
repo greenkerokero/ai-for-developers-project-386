@@ -1,13 +1,14 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { UI } from "@/lib/dictionary";
 
 export function OwnerLayout() {
   const location = useLocation();
 
   const links = [
-    { to: "/owner", label: "Дашборд" },
-    { to: "/owner/event-types", label: "Типы событий" },
-    { to: "/owner/availability", label: "Доступность" },
+    { to: "/owner", label: UI.nav.dashboard },
+    { to: "/owner/event-types", label: UI.nav.eventTypes },
+    { to: "/owner/availability", label: UI.nav.availability },
   ];
 
   return (
@@ -15,7 +16,7 @@ export function OwnerLayout() {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center">
           <Link to="/" className="mr-6 flex items-center space-x-2">
-            <span className="font-bold sm:inline-block">Встречи: Админка</span>
+            <span className="font-bold sm:inline-block">{UI.nav.home}</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {links.map((link) => (
