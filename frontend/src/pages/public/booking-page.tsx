@@ -21,7 +21,7 @@ export function BookingPage() {
   const startTime = searchParams.get("startTime");
   const navigate = useNavigate();
 
-  const { data: eventType } = usePublicEventType(slug!);
+  const { data: eventType, isLoading, error } = usePublicEventType(slug!);
   const { mutate, isPending } = useCreateBooking(slug!);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
@@ -34,7 +34,9 @@ export function BookingPage() {
     },
   });
 
-  if (!startTime || !eventType) return null;
+  if (!startTime) return <div className="p-8 text-center text-destructive">Не указано время бронирования</div>;
+  if (isLoading) return <div className="p-8 text-center text-muted-foreground">Загрузка...</div>;
+  if (error || !eventType) return <div className="p-8 text-center text-destructive">Событие не найдено</div>;
 
   const onSubmit = (data: FormData) => {
     mutate({ ...data, guestComment: data.guestComment || undefined }, {

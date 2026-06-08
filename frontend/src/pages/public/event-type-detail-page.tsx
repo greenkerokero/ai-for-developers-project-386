@@ -71,7 +71,7 @@ export function EventTypeDetailPage() {
                     asChild={slot.isAvailable}
                   >
                     {slot.isAvailable ? (
-                      <Link to={`/${slug}/book?startTime=${slot.startTime}`}>
+                      <Link to={`/${slug}/book?startTime=${encodeURIComponent(slot.startTime)}`}>
                         {format(parseISO(slot.startTime), "HH:mm")}
                       </Link>
                     ) : (
