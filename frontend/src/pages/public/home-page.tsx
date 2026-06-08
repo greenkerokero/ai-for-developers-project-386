@@ -14,9 +14,6 @@ export function HomePage() {
         <Button size="lg" asChild>
           <Link to="/events">Выбрать время</Link>
         </Button>
-        <Button size="lg" variant="outline" asChild>
-          <Link to="/owner">Вход для администратора</Link>
-        </Button>
       </div>
     </div>
   );

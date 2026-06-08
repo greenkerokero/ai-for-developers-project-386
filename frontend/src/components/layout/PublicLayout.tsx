@@ -6,7 +6,7 @@ export function PublicLayout() {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center">
           <Link to="/" className="mr-6 flex items-center space-x-2">
-            <span className="font-bold sm:inline-block">Встречи</span>
+            <span className="font-bold sm:inline-block">Главная</span>
           </Link>
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
             <nav className="flex items-center space-x-4">
@@ -14,13 +14,13 @@ export function PublicLayout() {
                 to="/events"
                 className="text-sm font-medium transition-colors hover:text-primary"
               >
-                Каталог
+                События
               </Link>
               <Link
                 to="/owner"
                 className="text-sm font-medium transition-colors hover:text-primary"
               >
-                Для владельца
+                Управление
               </Link>
             </nav>
           </div>
