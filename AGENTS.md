@@ -1,14 +1,26 @@
-# AGENTS_brief.md — Фронтенд (Booking API)
+# AGENTS.md — Фронтенд (Booking API)
 
 > Краткие инструкции для AI-агентов. Контракт: `tsp-output/openapi/openapi.yaml`.
 
-## 1. Стек
+## 1. Правила
+- Пиши тесты только на позитивные сценарии (не проверяй ошибки) и в основном интеграционные. обязан быть тестовый метод
+- В тестах проверяй только код возврата и если надо данные в базе
+- Если видишь изменения, которые ты не делал, игнорируй их
+- Исправляй причину, а не следствие
+- Минимум ручных типов, максимум из существующих API
+- Минимум ручной реализации, всегда смотрим готовое (в проекте и в библиотеках на гитхабе)
+- Код должен быть статически типизированным
+- Нельзя создавать обычные методы (не экшены) в контроллерах
+- Пиши тесты только когда просят
+- Разделяй получение и использование. Что-то получили записали в переменную, дальше передаем
+
+## 2. Стек
 
 TypeScript (strict) · Vite · React 18 · React Router v6 · shadcn/ui (Radix + Tailwind CSS) ·
 TanStack Query v5 · openapi-typescript + openapi-fetch · Zod + react-hook-form ·
 Prism + concurrently · Vitest + RTL + MSW · ESLint + Prettier · sonner
 
-## 2. Структура `frontend/src/`
+## 3. Структура `frontend/src/`
 
 ```
 src/
@@ -29,7 +41,7 @@ src/
                                  # event-type-edit-page, availability-page
 ```
 
-## 3. Кодогенерация и клиент
+## 4. Кодогенерация и клиент
 
 После изменений TypeSpec → OpenAPI: `npm run generate:api`
 (`openapi-typescript ../tsp-output/openapi/openapi.yaml -o src/api/generated/openapi.d.ts`).
@@ -37,12 +49,12 @@ src/
 API-клиент: `createClient<paths>({ baseUrl: import.meta.env.VITE_API_URL ?? "" })`.
 `VITE_API_URL` — пусто при `dev:mock` (Vite proxy), URL бэкенда в остальных режимах.
 
-## 4. Mock-сервер (Prism)
+## 5. Mock-сервер (Prism)
 
 `npm run dev:mock` — Prism (статика) + Vite. `npm run dev:mock:dynamic` — динамические данные.
 Vite проксирует `/owner/*` и `/public/*` на `http://localhost:4010`.
 
-## 5. Маршруты
+## 6. Маршруты
 
 | Путь | Компонент |
 |---|---|
@@ -57,7 +69,7 @@ Vite проксирует `/owner/*` и `/public/*` на `http://localhost:4010`
 
 Публичные → `<PublicLayout>`, owner → `<OwnerLayout>`. `QueryClientProvider` в `App.tsx` (`staleTime: 5 min`, `retry: 1`).
 
-## 6. Паттерны API
+## 7. Паттерны API
 
 Query-хук: `useQuery({ queryKey: queryKeys.X.list(params), queryFn: async () => { const { data, error } = await apiClient.GET("..."); if (error) throw error; return data; } })`.
 Mutation-хук: `useMutation` + `queryClient.invalidateQueries` в `onSuccess`.
@@ -69,7 +81,7 @@ Mutation-хук: `useMutation` + `queryClient.invalidateQueries` в `onSuccess`.
 | Отмена Booking | `queryKeys.bookings.all` + `queryKeys.slots.all` |
 | Обновление Availability | `queryKeys.availability.all` + `queryKeys.slots.all` |
 
-## 7. Формы и ошибки
+## 8. Формы и ошибки
 
 Формы: Zod-схема в `src/lib/validators.ts` → `useForm<T>({ resolver: zodResolver(schema) })` → shadcn `<Form>`.
 Типы — `z.infer<typeof schema>`, не дублировать вручную.
@@ -77,7 +89,7 @@ Mutation-хук: `useMutation` + `queryClient.invalidateQueries` в `onSuccess`.
 Ошибки: middleware в `client.ts` — `toast.error` при `status >= 500`;
 `<ErrorBoundary>` на уровне layout-групп; не подавлять ошибки TanStack Query.
 
-## 8. TypeScript
+## 9. TypeScript
 
 - `strict: true` обязателен; рекомендуется `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`
 - Без `any` — `unknown` + narrowing; явный комментарий при исключении
@@ -88,7 +100,7 @@ Mutation-хук: `useMutation` + `queryClient.invalidateQueries` в `onSuccess`.
 - `type` для union/intersection, `interface` для расширяемых объектов
 - Всегда `import type { … }` для импортов типов
 
-## 9. Именование и команды
+## 10. Именование и команды
 
 | Сущность | Стиль |
 |---|---|
