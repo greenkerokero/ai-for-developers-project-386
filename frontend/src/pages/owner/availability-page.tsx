@@ -99,12 +99,14 @@ export function AvailabilityPage() {
                 <div className="flex-1 flex items-center space-x-4">
                   <Input 
                     type="time" 
+                    id={`rules.${index}.startTime`}
                     {...register(`rules.${index}.startTime`)} 
                     className="w-32"
                   />
                   <span className="text-muted-foreground">-</span>
                   <Input 
                     type="time" 
+                    id={`rules.${index}.endTime`}
                     {...register(`rules.${index}.endTime`)} 
                     className="w-32"
                   />

@@ -15,7 +15,6 @@ import { EventTypeFormPage } from "@/pages/owner/event-type-form-page";
 import { EventTypeEditPage } from "@/pages/owner/event-type-edit-page";
 import { AvailabilityPage } from "@/pages/owner/availability-page";
 
-import { HomePage } from "@/pages/public/home-page";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,8 +31,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<PublicLayout />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/events" element={<PublicEventTypesPage />} />
+            <Route path="/" element={<PublicEventTypesPage />} />
             <Route path="/:slug" element={<EventTypeDetailPage />} />
             <Route path="/:slug/book" element={<BookingPage />} />
           </Route>
