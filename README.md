@@ -140,3 +140,40 @@ npm run generate:api
 | POST | `/public/event-types/{slug}/bookings` | Создать бронирование |
 
 Полная спецификация: [`tsp-output/openapi/openapi.yaml`](./tsp-output/openapi/openapi.yaml)
+
+---
+
+## E2E Тесты (Playwright)
+
+Проект включает интеграционные тесты для проверки полного пользовательского пути:
+- Создание типа события (owner)
+- Настройка расписания (owner)
+- Бронирование слота (public)
+- Отображение и отмена брони (owner)
+
+### Запуск E2E тестов
+
+Вам необходимо иметь установленные Node.js и uv:
+```bash
+cd e2e
+npm install
+npx playwright install chromium
+
+# Эта команда автоматически поднимет бэкенд на порту 3000
+# и фронтенд на порту 5173, после чего запустит тесты
+npx playwright test
+```
+
+---
+
+## Conventional Commits
+
+Все коммиты в ветку `main` (и PR) должны следовать формату [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<scope>): <description>
+```
+
+Допустимые типы: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `ci`, `chore`.
+
+Это необходимо для автоматического обновления версий и создания `CHANGELOG.md` через release-please.
