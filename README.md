@@ -23,50 +23,37 @@
 
 ## Быстрый старт (бэкенд + фронтенд)
 
-### 1. Node.js
+### 1. Установка всех зависимостей
+
+Убедитесь, что у вас установлены Node.js (v24), Python (3.12+) и uv.
 
 ```bash
-# Если используете nvm:
-source ~/.nvm/nvm.sh
-nvm install && nvm use
+# Установка зависимостей для фронтенда, бэкенда и рутового проекта
+make install
 ```
 
-### 2. TypeSpec — компиляция контракта
+### 2. Запуск приложения (Dev)
+
+Для одновременного запуска бэкенда и фронтенда в режиме разработки:
 
 ```bash
-# В корне проекта
-npm install
-npm run compile
+make dev
 ```
 
-Генерирует `tsp-output/openapi/openapi.yaml`.
+Приложение будет доступно:
+- Фронтенд: **http://localhost:5173**
+- API Бэкенда: **http://localhost:3000**
 
-### 3. Бэкенд
+---
+
+## Запуск в Production (Docker)
+
+Для сборки и локального запуска production-образа:
 
 ```bash
-# Установить uv (если не установлен)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-cd backend
-
-# Установить зависимости Python
-uv sync
-
-# Запустить сервер на http://localhost:3000
-uv run python manage.py runserver 3000
+make docker-build
+make docker-run
 ```
-
-### 4. Фронтенд (в новом терминале)
-
-```bash
-cd frontend
-npm install --legacy-peer-deps
-
-# Режим с реальным бэкендом (localhost:3000)
-npm run dev
-```
-
-Фронтенд будет доступен по адресу **http://localhost:5173**.
 
 ---
 
@@ -88,12 +75,8 @@ npm run dev
 Если вы правили `.tsp`-файлы, выполните в следующем порядке:
 
 ```bash
-# 1. Перекомпилировать TypeSpec → OpenAPI
-npm run compile          # в корне проекта
-
-# 2. Перегенерировать TS-типы из OpenAPI
-cd frontend
-npm run generate:api
+# Перекомпилировать TypeSpec, сгенерировать типы и собрать проект
+make build
 ```
 
 ---

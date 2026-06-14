@@ -22,11 +22,13 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "booking_api",
+    "django.contrib.staticfiles",
 ]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -70,3 +72,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [],
     "UNAUTHENTICATED_USER": None,
 }
+
+STATIC_URL = "assets/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+WHITENOISE_ROOT = BASE_DIR.parent / "frontend" / "dist"
+
